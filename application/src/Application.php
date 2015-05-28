@@ -49,7 +49,7 @@ class Application extends \Silex\Application
         }
 
         $this->get('/', function () {
-            return 'Hello World!';
+            return file_get_contents($this['root_dir'].'/data/invasion-of-norway-timeline.json');
         })
             ->bind('fontpage');
     }
