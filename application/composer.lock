@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ce062c33d1e5c6b4c61bddace478435e",
+    "hash": "1e8a82c1592e8f8280234bf6d0ff25ae",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -687,6 +687,57 @@
             "time": "2015-04-19 10:15:17"
         },
         {
+            "name": "symfony/config",
+            "version": "v2.6.8",
+            "target-dir": "Symfony/Component/Config",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Config.git",
+                "reference": "2696c5bc7c31485a482c10865d713de9fcc7aa31"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/2696c5bc7c31485a482c10865d713de9fcc7aa31",
+                "reference": "2696c5bc7c31485a482c10865d713de9fcc7aa31",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/filesystem": "~2.3"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Config\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Config Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-05-15 13:32:45"
+        },
+        {
             "name": "symfony/debug",
             "version": "v2.6.8",
             "target-dir": "Symfony/Component/Debug",
@@ -807,6 +858,56 @@
             "time": "2015-05-02 15:18:45"
         },
         {
+            "name": "symfony/filesystem",
+            "version": "v2.6.8",
+            "target-dir": "Symfony/Component/Filesystem",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Filesystem.git",
+                "reference": "1f8429f72a5bfa58b33fd96824bea146fc4b3f49"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/1f8429f72a5bfa58b33fd96824bea146fc4b3f49",
+                "reference": "1f8429f72a5bfa58b33fd96824bea146fc4b3f49",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Filesystem Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-05-15 13:32:45"
+        },
+        {
             "name": "symfony/finder",
             "version": "v2.6.8",
             "target-dir": "Symfony/Component/Finder",
@@ -858,33 +959,34 @@
         },
         {
             "name": "symfony/form",
-            "version": "v2.5.12",
+            "version": "v2.6.8",
             "target-dir": "Symfony/Component/Form",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Form.git",
-                "reference": "b1daee4c7be5bb6a7be1735348660fc4b7538b60"
+                "reference": "749ef2f3436477c47ee845fa1f779e31322b738e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Form/zipball/b1daee4c7be5bb6a7be1735348660fc4b7538b60",
-                "reference": "b1daee4c7be5bb6a7be1735348660fc4b7538b60",
+                "url": "https://api.github.com/repos/symfony/Form/zipball/749ef2f3436477c47ee845fa1f779e31322b738e",
+                "reference": "749ef2f3436477c47ee845fa1f779e31322b738e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "symfony/event-dispatcher": "~2.1",
                 "symfony/intl": "~2.3",
-                "symfony/options-resolver": "~2.1",
+                "symfony/options-resolver": "~2.6",
                 "symfony/property-access": "~2.3"
             },
             "require-dev": {
                 "doctrine/collections": "~1.0",
                 "symfony/http-foundation": "~2.2",
                 "symfony/http-kernel": "~2.4",
+                "symfony/phpunit-bridge": "~2.7",
                 "symfony/security-csrf": "~2.4",
                 "symfony/translation": "~2.0,>=2.0.5",
-                "symfony/validator": "~2.5,>=2.5.5"
+                "symfony/validator": "~2.6,>=2.6.8"
             },
             "suggest": {
                 "symfony/framework-bundle": "For templating with PHP.",
@@ -895,7 +997,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
@@ -909,17 +1011,17 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
                     "name": "Fabien Potencier",
                     "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony Form Component",
-            "homepage": "http://symfony.com",
-            "time": "2015-02-08 07:07:45"
+            "homepage": "https://symfony.com",
+            "time": "2015-05-22 14:53:08"
         },
         {
             "name": "symfony/http-foundation",
