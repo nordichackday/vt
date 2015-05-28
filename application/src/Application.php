@@ -3,14 +3,14 @@
 namespace VT;
 
 use Silex\Provider\FormServiceProvider;
-use Silex\Provider\MonologServiceProvider;
-use Silex\Provider\SecurityServiceProvider;
 use Silex\Provider\SerializerServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
+use Symfony\Component\HttpFoundation\Response;
+use VT\Entity\Timeline;
 
 class Application extends \Silex\Application
 {
@@ -38,10 +38,10 @@ class Application extends \Silex\Application
     private function initialize()
     {
         $this->register(new UrlGeneratorServiceProvider());
-        $this->register(new SerializerServiceProvider());
         $this->register(new TwigServiceProvider());
         $this->register(new FormServiceProvider());
         $this->register(new ValidatorServiceProvider());
+        $this->register(new SerializerServiceProvider());
 
         if ($this['debug']) {
             $this->register(new ServiceControllerServiceProvider());
@@ -49,7 +49,11 @@ class Application extends \Silex\Application
         }
 
         $this->get('/', function () {
-            return file_get_contents($this['root_dir'].'/data/invasion-of-norway-timeline.json');
+            $timeline = new Timeline('title', 'intro', []);
+
+            return new Response($this['serializer']->serialize($timeline, 'json'), 200, array(
+                "Content-Type" => $this['request']->getMimeType('json')
+            ));
         })
             ->bind('fontpage');
     }
