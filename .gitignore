@@ -5,5 +5,7 @@
 /.idea
 
 # Composer
-
 /application/vendor
+
+# Application cache
+/application/var
