@@ -110,7 +110,7 @@ class Application extends \Silex\Application
             ));
         });
 
-        $this->get('/timeline/created', function () {
+        $this->get('/timeline/create/done', function () {
             return $this['twig']->render('created.html.twig');
         });
 
@@ -124,17 +124,24 @@ class Application extends \Silex\Application
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $data = $form->getData();
+                /** @var Timeline $timeline */
+                $timeline = $form->getData();
 
-                // do something with the data
+                $this['db']
+                    ->insert('timeline', [
+                        'title' => $timeline->getTitle(),
+                        'intro' => $timeline->getIntro()
+                    ]);
+
 
                 // redirect somewhere
-                return $this->redirect('/timeline/created');
+                return $this->redirect('/timeline/create/done');
             }
 
             return $this['twig']->render('create.html.twig', [
                 'form' => $form->createView(),
             ]);
-        });
+        })
+            ->method('GET|POST');
     }
 }
