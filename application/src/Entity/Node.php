@@ -10,14 +10,6 @@ class Node
     private $body;
     private $timestamp;
 
-    public function __construct($mediaId, $intro, $timestamp, $body = [])
-    {
-        $this->setMediaId($mediaId);
-        $this->setIntro($intro);
-        $this->setBody($body);
-        $this->setTimestamp($timestamp);
-    }
-
     /**
      * @return mixed
      */
@@ -47,7 +39,7 @@ class Node
      */
     public function setIntro($intro)
     {
-        $this->intro = $intro;
+        $this->intro = utf8_encode($intro);
     }
 
     /**
@@ -63,7 +55,7 @@ class Node
      */
     public function setBody($body)
     {
-        $this->body = $body;
+        $this->body = utf8_encode($body);
     }
 
     /**

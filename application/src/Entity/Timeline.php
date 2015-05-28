@@ -8,13 +8,6 @@ class Timeline
     private $intro;
     private $nodes;
 
-    public function __construct($title, $intro, $nodes = [])
-    {
-        $this->setTitle($title);
-        $this->setIntro($intro);
-        $this->setNodes($nodes);
-    }
-
     /**
      * @return mixed
      */
@@ -52,7 +45,7 @@ class Timeline
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->title = utf8_encode($title);
     }
 
     /**
@@ -68,6 +61,6 @@ class Timeline
      */
     public function setIntro($intro)
     {
-        $this->intro = $intro;
+        $this->intro = utf8_encode($intro);
     }
 }

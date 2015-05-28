@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use VT\Entity\Node;
 use VT\Entity\Timeline;
+use VT\Form\NodeType;
+use VT\Form\TimelineType;
 
 class Application extends \Silex\Application
 {
@@ -85,7 +87,10 @@ class Application extends \Silex\Application
                     (int) $id
                 ]
             );
-            $timeline = new Timeline($data['title'], $data['intro'], []);
+
+            $timeline = new Timeline();
+            $timeline->setTitle($data['title']);
+            $timeline->setIntro($data['intro']);
 
             $nodes = $this['db']->fetchAll(
                 'SELECT * FROM nodes where tl_id = ? ORDER BY ordering DESC',
@@ -94,20 +99,25 @@ class Application extends \Silex\Application
                 ]
             );
 
-            foreach ($nodes as $node) {
-                $timeline->addNode(
-                    new Node(
-                        $node['media_id'],
-                        $node['intro'],
-                        time(),
-                        $node['body']
-                    ));
+            foreach ($nodes as $data) {
+                $node = new Node();
+                $node->setIntro($data['intro']);
+                $node->setMediaId($data['media_id']);
+                $node->setTimestamp(time());
+                $node->setBody($data['body']);
+                $timeline->addNode($node);
             }
 
-            return new Response($this['serializer']->serialize($timeline,
-                'json'), 200, array(
-                "Content-Type" => $this['request']->getMimeType('json')
-            ));
+            return new Response(
+                $this['serializer']->serialize(
+                    $timeline,
+                    'json'
+                ),
+                200,
+                [
+                    "Content-Type" => $this['request']->getMimeType('json')
+                ]
+            );
         });
 
         $this->get('/timeline/create/done', function () {
@@ -119,7 +129,16 @@ class Application extends \Silex\Application
                 new Timeline('', ''))
                 ->add('title', 'text')
                 ->add('intro', 'text')
+                ->add('nodes', 'collection', ['type' => new NodeType()])
                 ->getForm();
+
+
+            $timeline = new Timeline();
+            $node = new Node();
+
+            $timeline->addNode($node);
+
+            $form = $this['form.factory']->createBuilder(new TimelineType(), $timeline)->getForm();;
 
             $form->handleRequest($request);
 
@@ -132,7 +151,6 @@ class Application extends \Silex\Application
                         'title' => $timeline->getTitle(),
                         'intro' => $timeline->getIntro()
                     ]);
-
 
                 // redirect somewhere
                 return $this->redirect('/timeline/create/done');
