@@ -3,3 +3,7 @@
 
 # IDE stuff
 /.idea
+
+# Composer
+
+/application/vendor
