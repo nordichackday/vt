@@ -35,7 +35,7 @@ vagrantfile:
         synced_folder:
             vflsf_q73eh7fvebk4:
                 source: ./application
-                target: /var/www/web
+                target: /var/www
                 sync_type: default
                 smb:
                     smb_host: ''
