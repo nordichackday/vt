@@ -10,6 +10,7 @@ use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
+use VT\Entity\Node;
 use VT\Entity\Timeline;
 
 class Application extends \Silex\Application
@@ -49,7 +50,19 @@ class Application extends \Silex\Application
         }
 
         $this->get('/', function () {
-            $timeline = new Timeline('title', 'intro', []);
+
+            $nodes = [
+                new Node(
+                    1,
+                    'Det tyske troppetransportskipet «Rio de Janeiro» blir senket',
+                    time(),
+                    [
+                        'På vei til Bergen blir det tyske troppetransportskipet «Rio de Janeiro» senket',
+                        'sdfsfasdfasdfasdfasdf'
+                    ]
+                )
+            ];
+            $timeline = new Timeline('title', 'intro', $nodes);
 
             return new Response($this['serializer']->serialize($timeline, 'json'), 200, array(
                 "Content-Type" => $this['request']->getMimeType('json')

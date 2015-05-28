@@ -9,37 +9,13 @@ class Node
     private $intro;
     private $body;
     private $timestamp;
-    private $sections;
 
-    public function __construct($storyGroup, $intro, $body, $timestamp, $sections = [])
+    public function __construct($storyGroup, $intro, $timestamp, $body = [])
     {
         $this->setStoryGroup($storyGroup);
         $this->setIntro($intro);
         $this->setBody($body);
         $this->setTimestamp($timestamp);
-        $this->setSections($sections);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSections()
-    {
-        return $this->sections;
-    }
-
-    /**
-     * @param mixed $sections
-     */
-    public function setSections($sections)
-    {
-        $tmpArr = [];
-        if(is_array($sections)) {
-            foreach ($sections as $section) {
-                $tmpArr[] = ['text' => $section];
-            }
-        }
-        $this->sections = $tmpArr;
     }
 
     /**
@@ -87,7 +63,13 @@ class Node
      */
     public function setBody($body)
     {
-        $this->body = $body;
+        $tmpArr = [];
+        if(is_array($body)) {
+            foreach ($body as $section) {
+                $tmpArr[] = ['text' => $section];
+            }
+        }
+        $this->body['sections'] = $tmpArr;
     }
 
     /**
