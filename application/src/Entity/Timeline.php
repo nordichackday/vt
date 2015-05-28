@@ -24,6 +24,14 @@ class Timeline
     }
 
     /**
+     * @return mixed
+     */
+    public function addNode($node)
+    {
+        return $this->nodes[] = $node;
+    }
+
+    /**
      * @param mixed $nodes
      */
     public function setNodes($nodes)

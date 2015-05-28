@@ -2,7 +2,9 @@
 
 namespace VT;
 
+use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\FormServiceProvider;
+use Silex\Provider\SecurityServiceProvider;
 use Silex\Provider\SerializerServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\TwigServiceProvider;
@@ -42,32 +44,62 @@ class Application extends \Silex\Application
         $this->register(new TwigServiceProvider());
         $this->register(new FormServiceProvider());
         $this->register(new ValidatorServiceProvider());
+        $this->register(new SecurityServiceProvider());
         $this->register(new SerializerServiceProvider());
+        $this->register(new DoctrineServiceProvider(), array(
+            'db.options' => array(
+                'driver'   => 'pdo_mysql',
+                'dbname' => 'nordic',
+                'user' => 'virtual2015',
+                'password' => 'timeline',
+                'host' => 'db4free.net',
+            ),
+        ));
 
         if ($this['debug']) {
             $this->register(new ServiceControllerServiceProvider());
-            $this->register(new WebProfilerServiceProvider());
+            $this->register(new WebProfilerServiceProvider(), [
+                'profiler.cache_dir' => $this['cache_dir'].'/profiler',
+                'profiler.mount_prefix' => '/_profiler'
+            ]);
         }
 
-        $this->get('/', function () {
+        $this['security.firewalls'] = array(
+            'admin' => array(
+                'pattern' => '^/',
+                'anonymous' => true
+            ),
+        );
 
-            $nodes = [
+        $this->get('/timeline/{id}', function (Application $app, $id) {
+            $data = $this['db']->fetchAssoc(
+                'SELECT * FROM timeline where id = ?',
+                [
+                    (int) $id
+                ]
+            );
+            $timeline = new Timeline($data['title'], $data['intro'], []);
+
+            $nodes = $this['db']->fetchAll(
+                'SELECT * FROM nodes where tl_id = ? ORDER BY ordering DESC',
+                [
+                    (int) $id
+                ]
+            );
+
+            foreach ($nodes as $node) {
+                $timeline->addNode(
                 new Node(
-                    1,
-                    'Det tyske troppetransportskipet «Rio de Janeiro» blir senket',
+                    $node['media_id'],
+                    $node['intro'],
                     time(),
-                    [
-                        'På vei til Bergen blir det tyske troppetransportskipet «Rio de Janeiro» senket',
-                        'sdfsfasdfasdfasdfasdf'
-                    ]
-                )
-            ];
-            $timeline = new Timeline('title', 'intro', $nodes);
+                    $node['body']
+                ));
+            }
 
             return new Response($this['serializer']->serialize($timeline, 'json'), 200, array(
                 "Content-Type" => $this['request']->getMimeType('json')
             ));
-        })
-            ->bind('fontpage');
+        });
     }
 }

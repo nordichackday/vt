@@ -5,14 +5,14 @@ namespace VT\Entity;
 class Node
 {
 
-    private $storyGroup;
+    private $mediaId;
     private $intro;
     private $body;
     private $timestamp;
 
-    public function __construct($storyGroup, $intro, $timestamp, $body = [])
+    public function __construct($mediaId, $intro, $timestamp, $body = [])
     {
-        $this->setStoryGroup($storyGroup);
+        $this->setMediaId($mediaId);
         $this->setIntro($intro);
         $this->setBody($body);
         $this->setTimestamp($timestamp);
@@ -21,17 +21,17 @@ class Node
     /**
      * @return mixed
      */
-    public function getStoryGroup()
+    public function getMediaId()
     {
-        return $this->storyGroup;
+        return $this->mediaId;
     }
 
     /**
-     * @param mixed $storyGroup
+     * @param mixed $mediaId
      */
-    public function setStoryGroup($storyGroup)
+    public function setMediaId($mediaId)
     {
-        $this->storyGroup = $storyGroup;
+        $this->mediaId = $mediaId;
     }
 
     /**
@@ -63,13 +63,7 @@ class Node
      */
     public function setBody($body)
     {
-        $tmpArr = [];
-        if(is_array($body)) {
-            foreach ($body as $section) {
-                $tmpArr[] = ['text' => $section];
-            }
-        }
-        $this->body['sections'] = $tmpArr;
+        $this->body = $body;
     }
 
     /**
