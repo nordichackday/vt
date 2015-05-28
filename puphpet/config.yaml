@@ -69,7 +69,8 @@ vagrantfile:
         host: detect
 server:
     install: '1'
-    packages: {  }
+    packages:
+        - php5-mysql
 users_groups:
     install: '1'
     groups: {  }
