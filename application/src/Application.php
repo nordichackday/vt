@@ -47,5 +47,10 @@ class Application extends \Silex\Application
             $this->register(new ServiceControllerServiceProvider());
             $this->register(new WebProfilerServiceProvider());
         }
+
+        $this->get('/', function () {
+            return 'Hello World!';
+        })
+            ->bind('fontpage');
     }
 }
