@@ -53,7 +53,7 @@ class Timeline
      */
     public function getIntro()
     {
-        return $this->intro;
+        return utf8_decode($this->intro);
     }
 
     /**

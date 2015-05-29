@@ -34,7 +34,7 @@ class Node
      */
     public function getBody()
     {
-        return $this->body;
+        return utf8_decode($this->body);
     }
 
     /**
@@ -50,7 +50,7 @@ class Node
      */
     public function getLabel()
     {
-        return $this->label;
+        return utf8_decode($this->label);
     }
 
     /**
@@ -82,7 +82,7 @@ class Node
      */
     public function getTitle()
     {
-        return $this->title;
+        return utf8_decode($this->title);
     }
 
     /**
