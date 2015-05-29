@@ -9,8 +9,9 @@ class Node
     private $title;
     private $body;
     private $label;
-    /** @var $Media Media */
-    private $media;
+    /** @var $widget Widget */
+    private $widget;
+    private $order;
 
     /**
      * @return mixed
@@ -61,19 +62,19 @@ class Node
     }
 
     /**
-     * @return Media
+     * @return Widget
      */
-    public function getMedia()
+    public function getWidget()
     {
-        return $this->media;
+        return $this->widget;
     }
 
     /**
-     * @param Media $media
+     * @param Widget $widget
      */
-    public function setMedia($media)
+    public function setWidget($widget)
     {
-        $this->media[] = $media;
+        $this->widget[] = $widget;
     }
 
     /**
@@ -91,4 +92,21 @@ class Node
     {
         $this->title = $title;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param mixed $order
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+
 }

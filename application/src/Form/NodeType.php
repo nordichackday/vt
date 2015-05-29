@@ -12,12 +12,16 @@ class NodeType extends AbstractType
     {
         $builder->add('title');
         $builder->add('label');
+        $builder->add('order', 'integer');
         $builder->add('mediaId', 'choice', [
             'label' => 'Widget',
             'choices'  => array('1' => 'map', '2' => 'image'),
             'required' => false,
         ]);
-        $builder->add('media', 'collection', ['type' => new MediaType()]);
+        $builder->add('widget', 'collection', [
+            'label' => 'Widget config',
+            'type' => new WidgetType()
+        ]);
         $builder->add('body', 'textarea', [
             'attr' => [
                 'cols' => '80',

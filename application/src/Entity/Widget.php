@@ -4,10 +4,14 @@ namespace VT\Entity;
 
 class Widget
 {
+    private $id;
     private $type;
+    private $data;
 
-    public function __construct($type)
+    public function __construct($type, $data = false)
     {
+        $type = strtolower($type);
+
         $this->setType($type);
 
         switch($type) {
@@ -18,10 +22,19 @@ class Widget
                 $this->y2 = '';
                 break;
             case 'image':
-                $this->path = '';
+                $this->originalUrl = '';
                 $this->altText = '';
                 break;
         }
+
+        if($data) {
+            $data = json_decode($data);
+            foreach($data as $key => $value) {
+                $this->$key = $value;
+            }
+        }
+
+        $this->setData();
     }
 
     /**
@@ -40,6 +53,36 @@ class Widget
         $this->type = $type;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    public function setData()
+    {
+        $this->data = $this->jsonSerialize();
+    }
+
+
     public function jsonSerialize() {
         switch($this->getType()) {
             case 'map':
@@ -52,9 +95,9 @@ class Widget
                 break;
             case 'image':
                 return json_encode([
-                    'originalUrl' => $this->path,
-                    'altText' => $this->altText]
-                );
+                    'originalUrl' => $this->originalUrl,
+                    'altText' => $this->altText
+                ]);
                 break;
         }    }
 

@@ -109,6 +109,7 @@ class Application extends \Silex\Application
                 $node->setMediaId($nodeData['media_id']);
                 $node->setLabel($nodeData['label']);
                 $node->setBody($nodeData['body']);
+                $node->setOrder($nodeData['ordering']);
 
                 $mediaData = $this['db']->fetchAssoc(
                     'SELECT * FROM media m LEFT JOIN media_types mt ON m.type = mt.id where m.id = ? ',
@@ -117,12 +118,12 @@ class Application extends \Silex\Application
                     ]
                 );
 
-                $media = new Media();
-                $media->setId($mediaData['id']);
-                $media->setData($mediaData['data']);
-                $media->setType($mediaData['type']);
+                $widget = new Widget($mediaData['type'], $mediaData['data']);
 
-                $node->setMedia($media);
+                $widget->setId($mediaData['id']);
+                $widget->setType($mediaData['type']);
+
+                $node->setWidget($widget);
 
                 $timeline->addNode($node);
             }
@@ -155,14 +156,12 @@ class Application extends \Silex\Application
             $timeline = new Timeline();
 
             $node1 = new Node();
-            $media1 = new Media();
-            $media1->setWidget(new Widget('map'));
-            $node1->setMedia($media1);
+            $widget1 = new Widget('map');
+            $node1->setWidget($widget1);
 
             $node2 = new Node();
-            $media2 = new Media();
-            $media2->setWidget(new Widget('image'));
-            $node2->setMedia($media2);
+            $widget2 = new Widget('image');
+            $node2->setWidget($widget2);
 
             $timeline->addNode($node1);
             $timeline->addNode($node2);
@@ -184,12 +183,12 @@ class Application extends \Silex\Application
                 $timelineId = $this['db']->lastInsertId();
                 /** @var Node $node */
                 foreach($timeline->getNodes() as $node) {
-                    $media = $node->getMedia()[0]->getWidget()[0];
+                    $widget = $node->getWidget()[0];
 
                     $this['db']
                         ->insert('media', [
                             'type' => $node->getMediaId(),
-                            'data' => $media->jsonSerialize()
+                            'data' => $widget->jsonSerialize()
                         ]);
 
                     $mediaId = $this['db']->lastInsertId();
@@ -200,7 +199,8 @@ class Application extends \Silex\Application
                             'media_id' => $mediaId,
                             'title' => $node->getTitle(),
                             'body' => $node->getBody(),
-                            'label' => $node->getLabel()
+                            'label' => $node->getLabel(),
+                            'ordering' => $node->getOrder()
                         ]);
                 }
 
