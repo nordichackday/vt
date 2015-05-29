@@ -8,7 +8,9 @@ class Node
     private $mediaId;
     private $intro;
     private $body;
-    private $timestamp;
+    private $label;
+    /** @var $Media Media */
+    private $media;
 
     /**
      * @return mixed
@@ -23,7 +25,7 @@ class Node
      */
     public function setMediaId($mediaId)
     {
-        $this->mediaId = $mediaId;
+        $this->mediaId = (integer) $mediaId;
     }
 
     /**
@@ -61,20 +63,33 @@ class Node
     /**
      * @return mixed
      */
-    public function getTimestamp()
+    public function getLabel()
     {
-        return $this->timestamp;
+        return $this->label;
     }
 
     /**
-     * @param mixed $timestamp
+     * @param mixed $label
      */
-    public function setTimestamp($timestamp)
+    public function setLabel($label)
     {
-        if(!isset($timestamp)) {
-            $timestamp = time();
-        }
-
-        $this->timestamp = $timestamp;
+        $this->label = $label;
     }
+
+    /**
+     * @return Media
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param Media $media
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+    }
+
 }

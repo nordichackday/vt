@@ -14,6 +14,7 @@ use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use VT\Entity\Media;
 use VT\Entity\Node;
 use VT\Entity\Timeline;
 use VT\Form\NodeType;
@@ -92,19 +93,34 @@ class Application extends \Silex\Application
             $timeline->setTitle($data['title']);
             $timeline->setIntro($data['intro']);
 
-            $nodes = $this['db']->fetchAll(
+            $nodesData = $this['db']->fetchAll(
                 'SELECT * FROM nodes where tl_id = ? ORDER BY ordering DESC',
                 [
                     (int) $id
                 ]
             );
 
-            foreach ($nodes as $data) {
+            foreach ($nodesData as $nodeData) {
                 $node = new Node();
-                $node->setIntro($data['intro']);
-                $node->setMediaId($data['media_id']);
-                $node->setTimestamp(time());
-                $node->setBody($data['body']);
+                $node->setIntro($nodeData['intro']);
+                $node->setMediaId($nodeData['media_id']);
+                $node->setLabel($nodeData['label']);
+                $node->setBody($nodeData['body']);
+
+                $mediaData = $this['db']->fetchAssoc(
+                    'SELECT * FROM media m LEFT JOIN media_types mt ON m.type = mt.id where m.id = ? ',
+                    [
+                        (int) $node->getMediaId()
+                    ]
+                );
+
+                $media = new Media();
+                $media->setId($mediaData['id']);
+                $media->setData($mediaData['data']);
+                $media->setType($mediaData['type']);
+
+                $node->setMedia($media);
+
                 $timeline->addNode($node);
             }
 
