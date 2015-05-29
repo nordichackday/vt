@@ -10,12 +10,8 @@ class MediaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('type');
-        $builder->add('data', 'textarea', [
-            'attr' => [
-                'cols' => '125',
-                'rows' => '5'
-            ]
+        $builder->add('widget', 'collection', [
+            'type' => new WidgetType()
         ]);
     }
 

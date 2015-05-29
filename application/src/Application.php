@@ -14,9 +14,12 @@ use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use VT\Entity\Image;
+use VT\Entity\Map;
 use VT\Entity\Media;
 use VT\Entity\Node;
 use VT\Entity\Timeline;
+use VT\Entity\Widget;
 use VT\Form\NodeType;
 use VT\Form\TimelineType;
 
@@ -94,7 +97,7 @@ class Application extends \Silex\Application
             $timeline->setIntro($data['intro']);
 
             $nodesData = $this['db']->fetchAll(
-                'SELECT * FROM nodes where tl_id = ? ORDER BY ordering DESC',
+                'SELECT * FROM nodes where tl_id = ? ORDER BY ordering ASC',
                 [
                     (int) $id
                 ]
@@ -150,11 +153,19 @@ class Application extends \Silex\Application
 
 
             $timeline = new Timeline();
+
             $node1 = new Node();
-            $node1->setMedia(new Media());
+            $media1 = new Media();
+            $media1->setWidget(new Widget('map'));
+            $node1->setMedia($media1);
+
+            $node2 = new Node();
+            $media2 = new Media();
+            $media2->setWidget(new Widget('image'));
+            $node2->setMedia($media2);
+
             $timeline->addNode($node1);
-            $timeline->addNode(new Node());
-            $timeline->addNode(new Node());
+            $timeline->addNode($node2);
 
             $form = $this['form.factory']->createBuilder(new TimelineType(), $timeline)->getForm();;
 

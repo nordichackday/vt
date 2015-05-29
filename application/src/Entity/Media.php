@@ -7,6 +7,7 @@ class Media
     private $id;
     private $type;
     private $data;
+    private $widget;
 
     /**
      * @return mixed
@@ -54,6 +55,22 @@ class Media
     public function setData($data)
     {
         $this->data = $data;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWidget()
+    {
+        return $this->widget;
+    }
+
+    /**
+     * @param mixed $widget
+     */
+    public function setWidget($widget)
+    {
+        $this->widget[] = $widget;
     }
 
 }

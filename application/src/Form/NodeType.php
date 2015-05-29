@@ -17,10 +17,7 @@ class NodeType extends AbstractType
             'choices'  => array('1' => 'map', '2' => 'image'),
             'required' => false,
         ]);
-        $builder->add('media', 'collection', [
-            'label' => false,
-            'type' => new MediaType()
-        ]);
+        $builder->add('media', 'collection', ['type' => new MediaType()]);
         $builder->add('body', 'textarea', [
             'attr' => [
                 'cols' => '80',
