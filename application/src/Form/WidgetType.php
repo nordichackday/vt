@@ -26,6 +26,7 @@ class WidgetType extends AbstractType
                     break;
                 case 'image':
                     $form->add('path');
+                    $form->add('altText');
                     break;
             }
         });

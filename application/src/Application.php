@@ -184,10 +184,20 @@ class Application extends \Silex\Application
                 $timelineId = $this['db']->lastInsertId();
                 /** @var Node $node */
                 foreach($timeline->getNodes() as $node) {
+                    $media = $node->getMedia()[0]->getWidget()[0];
+
+                    $this['db']
+                        ->insert('media', [
+                            'type' => $node->getMediaId(),
+                            'data' => $media->jsonSerialize()
+                        ]);
+
+                    $mediaId = $this['db']->lastInsertId();
+
                     $this['db']
                         ->insert('nodes', [
                             'tl_id' => $timelineId,
-                            'media_id' => $node->getMediaId(),
+                            'media_id' => $mediaId,
                             'title' => $node->getTitle(),
                             'body' => $node->getBody(),
                             'label' => $node->getLabel()
