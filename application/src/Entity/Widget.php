@@ -66,7 +66,7 @@ class Widget
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->id = (integer) $id;
     }
 
     /**
