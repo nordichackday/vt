@@ -6,7 +6,7 @@ class Node
 {
 
     private $mediaId;
-    private $intro;
+    private $title;
     private $body;
     private $label;
     /** @var $Media Media */
@@ -26,22 +26,6 @@ class Node
     public function setMediaId($mediaId)
     {
         $this->mediaId = (integer) $mediaId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIntro()
-    {
-        return $this->intro;
-    }
-
-    /**
-     * @param mixed $intro
-     */
-    public function setIntro($intro)
-    {
-        $this->intro = utf8_encode($intro);
     }
 
     /**
@@ -89,7 +73,22 @@ class Node
      */
     public function setMedia($media)
     {
-        $this->media = $media;
+        $this->media[] = $media;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
 }

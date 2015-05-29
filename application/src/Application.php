@@ -102,7 +102,7 @@ class Application extends \Silex\Application
 
             foreach ($nodesData as $nodeData) {
                 $node = new Node();
-                $node->setIntro($nodeData['intro']);
+                $node->setTitle($nodeData['title']);
                 $node->setMediaId($nodeData['media_id']);
                 $node->setLabel($nodeData['label']);
                 $node->setBody($nodeData['body']);
@@ -150,9 +150,11 @@ class Application extends \Silex\Application
 
 
             $timeline = new Timeline();
-            $node = new Node();
-
-            $timeline->addNode($node);
+            $node1 = new Node();
+            $node1->setMedia(new Media());
+            $timeline->addNode($node1);
+            $timeline->addNode(new Node());
+            $timeline->addNode(new Node());
 
             $form = $this['form.factory']->createBuilder(new TimelineType(), $timeline)->getForm();;
 
@@ -167,6 +169,19 @@ class Application extends \Silex\Application
                         'title' => $timeline->getTitle(),
                         'intro' => $timeline->getIntro()
                     ]);
+
+                $timelineId = $this['db']->lastInsertId();
+                /** @var Node $node */
+                foreach($timeline->getNodes() as $node) {
+                    $this['db']
+                        ->insert('nodes', [
+                            'tl_id' => $timelineId,
+                            'media_id' => $node->getMediaId(),
+                            'title' => $node->getTitle(),
+                            'body' => $node->getBody(),
+                            'label' => $node->getLabel()
+                        ]);
+                }
 
                 // redirect somewhere
                 return $this->redirect('/timeline/create/done');

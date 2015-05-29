@@ -1,4 +1,9 @@
-<form action="#" method="post">
-    {{ form_widget(form) }}
-    <input type="submit" name="submit" />
-</form>
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h1>Create Timeline</h1>
+    <form action="#" method="post">
+        {{ form_widget(form) }}
+        <input type="submit" name="submit" />
+    </form>
+{% endblock %}

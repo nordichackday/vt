@@ -10,10 +10,24 @@ class NodeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('mediaId');
-        $builder->add('intro');
-        $builder->add('body');
-        $builder->add('timestamp');
+        $builder->add('title');
+        $builder->add('label');
+        $builder->add('mediaId', 'choice', [
+            'label' => 'Widget',
+            'choices'  => array('1' => 'map', '2' => 'image'),
+            'required' => false,
+        ]);
+        $builder->add('media', 'collection', [
+            'label' => false,
+            'type' => new MediaType()
+        ]);
+        $builder->add('body', 'textarea', [
+            'attr' => [
+                'cols' => '80',
+                'rows' => '5'
+            ]
+        ]);
+
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
