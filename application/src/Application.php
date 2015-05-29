@@ -118,7 +118,7 @@ class Application extends \Silex\Application
                     ]
                 );
 
-                $widget = new Widget($mediaData['type'], $mediaData['data']);
+                $widget = new Widget($mediaData['id'], $mediaData['data']);
 
                 $widget->setId($mediaData['id']);
                 $widget->setType($mediaData['type']);

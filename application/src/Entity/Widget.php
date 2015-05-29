@@ -10,18 +10,17 @@ class Widget
 
     public function __construct($type, $data = false)
     {
-        $type = strtolower($type);
 
         $this->setType($type);
 
-        switch($type) {
-            case 'map':
+        switch($this->getType()) {
+            case "2":
                 $this->x1 = '';
                 $this->y1 = '';
                 $this->x2 = '';
                 $this->y2 = '';
                 break;
-            case 'image':
+            case "1":
                 $this->originalUrl = '';
                 $this->altText = '';
                 break;
@@ -85,7 +84,7 @@ class Widget
 
     public function jsonSerialize() {
         switch($this->getType()) {
-            case 'map':
+            case "2":
                 return json_encode([
                     'x1' => $this->x1,
                     'y1' => $this->y1,
@@ -93,12 +92,13 @@ class Widget
                     'y2' => $this->y2
                 ]);
                 break;
-            case 'image':
+            case "1":
                 return json_encode([
                     'originalUrl' => $this->originalUrl,
                     'altText' => $this->altText
                 ]);
                 break;
-        }    }
+        }
+    }
 
 }
