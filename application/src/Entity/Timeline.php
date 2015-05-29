@@ -37,7 +37,7 @@ class Timeline
      */
     public function getTitle()
     {
-        return $this->title;
+        return utf8_decode($this->title);
     }
 
     /**

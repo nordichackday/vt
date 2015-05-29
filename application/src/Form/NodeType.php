@@ -15,7 +15,7 @@ class NodeType extends AbstractType
         $builder->add('order', 'integer');
         $builder->add('mediaId', 'choice', [
             'label' => 'Widget',
-            'choices'  => array('1' => 'map', '2' => 'image'),
+            'choices'  => array('2' => 'map', '1' => 'image'),
             'required' => false,
         ]);
         $builder->add('widget', 'collection', [

@@ -10,7 +10,6 @@ class Widget
 
     public function __construct($type, $data = false)
     {
-
         $this->setType($type);
 
         switch($this->getType()) {

@@ -155,16 +155,12 @@ class Application extends \Silex\Application
 
             $timeline = new Timeline();
 
-            $node1 = new Node();
-            $widget1 = new Widget('map');
-            $node1->setWidget($widget1);
-
-            $node2 = new Node();
-            $widget2 = new Widget('image');
-            $node2->setWidget($widget2);
-
-            $timeline->addNode($node1);
-            $timeline->addNode($node2);
+            for($i=0; $i <= 20; $i++) {
+                $node = new Node();
+                $widget = new Widget('1');
+                $node->setWidget($widget);
+                $timeline->addNode($node);
+            }
 
             $form = $this['form.factory']->createBuilder(new TimelineType(), $timeline)->getForm();;
 

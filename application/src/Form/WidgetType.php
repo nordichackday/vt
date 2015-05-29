@@ -12,20 +12,19 @@ class WidgetType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $widget = $event->getData();
             $form = $event->getForm();
 
             switch($widget->getType()) {
-                case 'map':
+                case '2':
                     $form->add('x1');
                     $form->add('y1');
                     $form->add('x2');
                     $form->add('y2');
                     break;
-                case 'image':
-                    $form->add('path');
+                case '1':
+                    $form->add('originalUrl');
                     $form->add('altText');
                     break;
             }
