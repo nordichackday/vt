@@ -37,7 +37,7 @@ class Timeline
      */
     public function getTitle()
     {
-        return utf8_decode($this->title);
+        return $this->title;
     }
 
     /**
@@ -53,7 +53,7 @@ class Timeline
      */
     public function getIntro()
     {
-        return utf8_decode($this->intro);
+        return $this->intro;
     }
 
     /**
